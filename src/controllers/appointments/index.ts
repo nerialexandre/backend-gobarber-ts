@@ -1,16 +1,13 @@
-import { startOfHour, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { Request, Response } from 'express';
+import { getCustomRepository } from 'typeorm';
 import AppointmentRepository from '../../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../../services/appointments/CreateAppointmentService';
 
-const appointmentRepository = new AppointmentRepository();
-const createAppointmentService = new CreateAppointmentService(
-  appointmentRepository,
-);
-
 class AppointmentController {
   public async index(req: Request, res: Response) {
-    const appointments = appointmentRepository.getAll();
+    const appointmentRepository = getCustomRepository(AppointmentRepository);
+    const appointments = await appointmentRepository.find();
     return res.json(appointments);
   }
 
@@ -20,21 +17,11 @@ class AppointmentController {
 
       const appointmentDate = parseISO(date);
 
-      const result = createAppointmentService.execute({
+      const result = await CreateAppointmentService.execute({
         provider,
         date: appointmentDate,
       });
-      // const parsedDate = startOfHour(appointmentDate);
-      // const checkAvailability = appointmentRepository.findByDate(parsedDate);
 
-      // if (checkAvailability) {
-      //   return res.status(500).json({ msg: 'horio indisponivel' });
-      // }
-
-      // const appointment = appointmentRepository.create({
-      //   provider,
-      //   date: parsedDate,
-      // });
       return res.status(200).json(result);
     } catch (err) {
       return res.status(400).json({ error: err.message });
