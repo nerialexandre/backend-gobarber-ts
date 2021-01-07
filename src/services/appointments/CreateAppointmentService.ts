@@ -6,10 +6,15 @@ import AppointmentRepository from '../../repositories/AppointmentsRepository';
 interface Request {
   date: Date;
   provider: string;
+  user: string;
 }
 
 class CreateAppointmentService {
-  public async execute({ date, provider }: Request): Promise<Appointment> {
+  public async execute({
+    date,
+    provider,
+    user,
+  }: Request): Promise<Appointment> {
     const appointmentRepository = getCustomRepository(AppointmentRepository);
     const appointmentDate = startOfHour(date);
     const checkAvailability = await appointmentRepository.findByDate(
@@ -21,7 +26,8 @@ class CreateAppointmentService {
     }
 
     const appointment = appointmentRepository.create({
-      provider,
+      providerId: provider,
+      userId: user,
       date: appointmentDate,
     });
 

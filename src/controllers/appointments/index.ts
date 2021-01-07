@@ -7,19 +7,20 @@ import CreateAppointmentService from '../../services/appointments/CreateAppointm
 class AppointmentController {
   public async index(req: Request, res: Response) {
     const appointmentRepository = getCustomRepository(AppointmentRepository);
-    const appointments = await appointmentRepository.find();
+    const appointments = await appointmentRepository.getAll();
     return res.json(appointments);
   }
 
   public async create(req: Request, res: Response) {
     try {
-      const { provider, date } = req.body;
+      const { user, provider, date } = req.body;
 
       const appointmentDate = parseISO(date);
 
       const result = await CreateAppointmentService.execute({
-        provider,
         date: appointmentDate,
+        provider,
+        user,
       });
 
       return res.status(200).json(result);
