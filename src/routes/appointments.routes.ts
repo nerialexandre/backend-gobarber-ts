@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import AppointmentController from '../../controllers/appointments/index';
+import AppointmentController from '../controllers/appointments/index';
 
 export default (router: Router): void => {
   router
