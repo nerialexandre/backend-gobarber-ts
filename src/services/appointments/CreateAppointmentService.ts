@@ -22,7 +22,7 @@ class CreateAppointmentService {
     );
 
     if (checkAvailability) {
-      throw new Error('Horario Indisponivel');
+      throw new Error('HorarioIndisponivel');
     }
 
     const appointment = appointmentRepository.create({

@@ -12,21 +12,21 @@ class AppointmentController {
   }
 
   public async create(req: Request, res: Response) {
-    try {
-      const { user, provider, date } = req.body;
+    // try {
+    const { user, provider, date } = req.body;
 
-      const appointmentDate = parseISO(date);
+    const appointmentDate = parseISO(date);
 
-      const result = await CreateAppointmentService.execute({
-        date: appointmentDate,
-        provider,
-        user,
-      });
+    const result = await CreateAppointmentService.execute({
+      date: appointmentDate,
+      provider,
+      user,
+    });
 
-      return res.status(200).json(result);
-    } catch (err) {
-      return res.status(400).json({ error: err.message });
-    }
+    return res.status(200).json(result);
+    // } catch (err) {
+    //   return res.status(400).json({ error: err.message });
+    // }
   }
 }
 

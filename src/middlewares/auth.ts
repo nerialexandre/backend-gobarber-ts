@@ -10,11 +10,10 @@ export default function AuthMiddlewere(
   const { authorization } = req.headers;
 
   if (!authorization) {
-    throw new Error('JWT invalido');
+    throw new Error('Necessario token JWT');
   }
 
   const [, token] = authorization.split(' ');
-
   Jwt.verify(token, config.jwt.secret);
 
   return next();
