@@ -1,30 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
 import errors from '../config/errors';
 
-const getKeyValue = <U extends keyof T, T extends object>(key: U) => (obj: T) =>
-  obj[key];
-
-interface User {
-  name: string;
-  age: number;
-}
-
 export default function ErrorsMiddlewere(
   err: Error,
   req: Request,
   res: Response,
   next: NextFunction,
 ): void {
-  const user: User = {
-    name: 'John Smith',
-    age: 20,
-  };
-
-  const getUserName = getKeyValue<keyof User, User>('name')(user);
-
-  console.log(getUserName);
-
   const { message } = err;
-  const x = errors[`${message}`];
-  res.status(x.httpCode).json({ message: x.response });
+
+  const error = errors.find(item => item.errorCode === message);
+
+  if (!error) {
+    res.status(500).json({
+      error: 500,
+      message:
+        'Ocorreu um erro inesperado no servidor.Entre em contato com o responsavel',
+    });
+  } else {
+    res.status(error.httpCode).json({ message: error });
+  }
+  next();
 }
