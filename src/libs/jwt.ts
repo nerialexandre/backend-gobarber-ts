@@ -8,7 +8,7 @@ interface TokenData {
 class Jwt {
   generate = (tokenData: TokenData, secret: string, _expiresIn: string) => {
     return sign(tokenData, secret, {
-      expiresIn: _expiresIn,
+      expiresIn: _expiresIn
     });
   };
 

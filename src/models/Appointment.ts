@@ -1,4 +1,3 @@
-import { type } from 'os';
 import {
   Entity,
   Column,
@@ -6,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn,
+  JoinColumn
 } from 'typeorm';
 
 import User from './User';

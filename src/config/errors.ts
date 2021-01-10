@@ -13,4 +13,12 @@ export default [
     description:
       'Usuario nao esta autorizado a fazer esta açao. Faça login novamente e tente outra vez',
   },
+
+  {
+    errorCode: 'A001',
+    httpCode: 500,
+    title: 'Erro na coonexao com banco de dados',
+    description:
+      'Não foi possivelk conectar ao banco de dados para salvar o agendamento',
+  },
 ];

@@ -1,4 +1,3 @@
-import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import UserRepository from '../../repositories/UserRepository';
 import User from '../../models/User';
@@ -17,13 +16,9 @@ interface Response {
 
 class UserAuthenticationService {
   public async execute({ email, password }: Request): Promise<Response> {
-    const userRepository = getCustomRepository(UserRepository);
+    const userRepository = new UserRepository();
 
-    const findUser = await userRepository.findOne({
-      where: {
-        email,
-      },
-    });
+    const findUser = await userRepository.findByEmail(email);
 
     if (!findUser) {
       throw new Error('Email ou senha invalido');
