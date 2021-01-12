@@ -18,7 +18,7 @@ class UserRepository {
 
   public async findByEmail(email: string): Promise<User | null> {
     const findUser = await this.ormRepository.findOne({
-      where: { email },
+      where: { email }
     });
 
     return findUser || null;
@@ -27,9 +27,29 @@ class UserRepository {
   public async create(
     name: string,
     email: string,
-    password: string,
+    password: string
   ): Promise<User> {
     const user = await this.ormRepository.create({ name, email, password });
+
+    await this.ormRepository.save(user);
+
+    return user;
+  }
+
+  public async updatePassword(
+    email: string,
+    password: string,
+    userId: string
+  ): Promise<User> {
+    const user = await this.ormRepository.findOne({
+      where: { email, id: userId }
+    });
+
+    console.log(user);
+    if (!user) {
+      throw new Error('nao localizado');
+    }
+    user.password = password;
 
     await this.ormRepository.save(user);
 

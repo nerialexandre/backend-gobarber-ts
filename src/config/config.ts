@@ -1,7 +1,7 @@
 export default {
   jwt: {
     secret: 'agendamento',
-    expiresIn: '6h',
+    expiresIn: '6h'
   },
   modules: {
     expressWinston: {
@@ -11,15 +11,15 @@ export default {
           silent: false,
           filename: '/app.log',
           maxsize: 5242880,
-          maxFiles: 5,
+          maxFiles: 5
         },
         console: {
           level: 'info',
-          silent: false,
-        },
+          silent: false
+        }
       },
       meta: false,
-      expressFormat: true,
+      expressFormat: true
     },
     winston: {
       transports: {
@@ -28,13 +28,13 @@ export default {
           silent: false,
           filename: '/app.log',
           maxsize: 5242880,
-          maxFiles: 5,
+          maxFiles: 5
         },
         console: {
           level: 'info',
-          silent: false,
-        },
-      },
-    },
-  },
+          silent: false
+        }
+      }
+    }
+  }
 };

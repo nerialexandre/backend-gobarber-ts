@@ -18,7 +18,7 @@ class AppointmentRepository {
 
   public async findByDate(date: Date): Promise<Appointment | null> {
     const findAppointment = await this.ormRepository.findOne({
-      where: { date },
+      where: { date }
     });
 
     return findAppointment || null;
@@ -27,12 +27,12 @@ class AppointmentRepository {
   public async create(
     providerId: string,
     userId: string,
-    date: Date,
+    date: Date
   ): Promise<Appointment> {
     const appointment = this.ormRepository.create({
       providerId,
       userId,
-      date,
+      date
     });
 
     if (!appointment) {

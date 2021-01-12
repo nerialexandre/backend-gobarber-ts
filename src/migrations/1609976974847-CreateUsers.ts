@@ -11,33 +11,33 @@ export default class CreateUsers1609976974847 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            default: 'uuid_generate_v4()'
           },
           {
             name: 'name',
-            type: 'varchar',
+            type: 'varchar'
           },
           {
             name: 'email',
             type: 'varchar',
-            isUnique: true,
+            isUnique: true
           },
           {
             name: 'password',
-            type: 'varchar',
+            type: 'varchar'
           },
           {
             name: 'createdAt',
             type: 'timestamp',
-            default: 'now()',
+            default: 'now()'
           },
           {
             name: 'updatedAt',
             type: 'timestamp',
-            default: 'now()',
-          },
-        ],
-      }),
+            default: 'now()'
+          }
+        ]
+      })
     );
   }
 

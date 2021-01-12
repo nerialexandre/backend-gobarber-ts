@@ -12,39 +12,39 @@ export default class CreateAppointments1609891606466
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            default: 'uuid_generate_v4()'
           },
           {
             name: 'providerId',
             type: 'uuid',
-            isNullable: true,
+            isNullable: true
           },
           {
             name: 'userId',
             type: 'uuid',
-            isNullable: true,
+            isNullable: true
           },
           {
             name: 'date',
-            type: 'timestamp with time zone',
+            type: 'timestamp with time zone'
           },
           {
             name: 'createdAt',
             type: 'timestamp',
-            default: 'now()',
+            default: 'now()'
           },
           {
             name: 'updatedAt',
             type: 'timestamp',
-            default: 'now()',
+            default: 'now()'
           },
           {
             name: 'appointmentActive',
             type: 'boolean',
-            default: true,
-          },
-        ],
-      }),
+            default: true
+          }
+        ]
+      })
     );
   }
 

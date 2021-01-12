@@ -11,8 +11,8 @@ export default class CreateApointmentsRelationships1609977697361
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      }),
+        onUpdate: 'CASCADE'
+      })
     );
 
     await queryRunner.createForeignKey(
@@ -23,8 +23,8 @@ export default class CreateApointmentsRelationships1609977697361
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      }),
+        onUpdate: 'CASCADE'
+      })
     );
   }
 

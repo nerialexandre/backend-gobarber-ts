@@ -1,6 +1,7 @@
 import { hash } from 'bcryptjs';
 import User from '../../models/User';
 import UserRepository from '../../repositories/UserRepository';
+import CreateUserTokenService from './password/CreateUserTokenService';
 
 interface Request {
   name: string;
@@ -20,6 +21,12 @@ class CreateUserService {
     const hashadPassword = await hash(password, 8);
 
     const user = await userRepository.create(name, email, hashadPassword);
+
+    const userId = user.id;
+
+    await CreateUserTokenService.execute({
+      userId
+    });
 
     return user;
   }

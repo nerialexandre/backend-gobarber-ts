@@ -32,15 +32,15 @@ class UserAuthenticationService {
     const token = Jwt.generate(
       {
         id: findUser.id,
-        name: findUser.name,
+        name: findUser.name
       },
       config.jwt.secret,
-      config.jwt.expiresIn,
+      config.jwt.expiresIn
     );
 
     return {
       user: findUser,
-      token,
+      token
     };
   }
 }

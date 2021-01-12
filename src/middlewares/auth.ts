@@ -5,7 +5,7 @@ import config from '../config/config';
 export default function AuthMiddlewere(
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ): void {
   const { authorization } = req.headers;
 
