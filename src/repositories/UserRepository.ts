@@ -37,18 +37,16 @@ class UserRepository {
   }
 
   public async updatePassword(
+    userId: string,
     email: string,
-    password: string,
-    userId: string
+    password: string
   ): Promise<User> {
-    const user = await this.ormRepository.findOne({
-      where: { email, id: userId }
-    });
+    const user = await this.ormRepository.findOne(userId);
 
-    console.log(user);
     if (!user) {
       throw new Error('nao localizado');
     }
+
     user.password = password;
 
     await this.ormRepository.save(user);
