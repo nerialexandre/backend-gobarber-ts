@@ -16,6 +16,10 @@ class CreateAppointmentService {
   }: Request): Promise<Appointment> {
     const appointmentRepository = new AppointmentRepository();
 
+    if (provider === user) {
+      throw new Error('A005');
+    }
+
     const appointmentDate = startOfHour(date);
     const checkAvailability = await appointmentRepository.findByDate(
       appointmentDate
