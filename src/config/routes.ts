@@ -40,7 +40,7 @@ export default (app: Express): void => {
     }, files_ || []);
   }
 
-  const allFiles = getFiles(`${__dirname}/../routes`, [], '.ts|.js');
+  const allFiles = getFiles(`${__dirname}/../app/routes`, [], '.ts|.js');
   allFiles.map(async (file: string) => {
     (await import(file)).default(router);
   });
