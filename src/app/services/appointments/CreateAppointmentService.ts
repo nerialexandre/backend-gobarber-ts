@@ -1,37 +1,53 @@
-import { startOfHour } from 'date-fns';
+import { startOfHour, isBefore } from 'date-fns';
 import Appointment from '../../models/Appointment';
 import AppointmentRepository from '../../repositories/AppointmentsRepository';
+import UserRepository from '../../repositories/UserRepository';
 
 interface Request {
   date: Date;
-  provider: string;
-  user: string;
+  providerId: string;
+  userId: string;
 }
 
 class CreateAppointmentService {
   public async execute({
     date,
-    provider,
-    user
+    providerId,
+    userId
   }: Request): Promise<Appointment> {
     const appointmentRepository = new AppointmentRepository();
+    const userRepository = new UserRepository();
 
-    if (provider === user) {
+    console.log('teste');
+
+    if (providerId === userId) {
       throw new Error('A005');
     }
 
     const appointmentDate = startOfHour(date);
-    const checkAvailability = await appointmentRepository.findByDate(
-      appointmentDate
-    );
+
+    if (isBefore(date, new Date())) {
+      throw new Error('horario já passou');
+    }
+
+    const provider = await userRepository.findOneProvider(providerId);
+
+    if (!provider) {
+      throw new Error('P002');
+    }
+
+    const checkAvailability = await appointmentRepository.findByDate({
+      date: appointmentDate,
+      providerId: provider.id
+    });
 
     if (checkAvailability) {
       throw new Error('H001');
     }
 
     const appointment = await appointmentRepository.create(
-      provider,
-      user,
+      provider.id,
+      userId,
       date
     );
 

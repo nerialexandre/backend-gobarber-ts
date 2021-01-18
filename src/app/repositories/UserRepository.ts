@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getRepository } from 'typeorm';
+import { EntityRepository, Repository, getRepository, Not } from 'typeorm';
 
 // models
 import User from '../models/User';
@@ -6,6 +6,10 @@ import User from '../models/User';
 interface IupdatePassword {
   userId: string;
   password: string;
+}
+
+interface IexceptionUserId {
+  exceptionUserId: string | undefined;
 }
 
 @EntityRepository(User)
@@ -21,9 +25,35 @@ class UserRepository {
     return users;
   }
 
+  public async getAllProvider(data: IexceptionUserId): Promise<User[] | null> {
+    const { exceptionUserId } = data;
+    let users: User[];
+
+    if (exceptionUserId) {
+      users = await this.ormRepository.find({
+        where: {
+          isProvider: true,
+          id: Not(exceptionUserId)
+        }
+      });
+    } else {
+      users = await this.ormRepository.find();
+    }
+
+    return users;
+  }
+
   public async findByEmail(email: string): Promise<User | null> {
     const findUser = await this.ormRepository.findOne({
       where: { email }
+    });
+
+    return findUser || null;
+  }
+
+  public async findOneProvider(providerId: string): Promise<User | null> {
+    const findUser = await this.ormRepository.findOne({
+      where: { id: providerId, isProvider: true }
     });
 
     return findUser || null;

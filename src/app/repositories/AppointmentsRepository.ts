@@ -1,7 +1,18 @@
-import { EntityRepository, Repository, getRepository } from 'typeorm';
+import { EntityRepository, Repository, getRepository, Between } from 'typeorm';
 
 // models
 import Appointment from '../models/Appointment';
+
+interface findByDate {
+  date: Date;
+  providerId: string;
+}
+
+interface IfindDaysWithScheduleAvailable {
+  startDate: Date;
+  endDate: Date;
+  providerId: string;
+}
 
 @EntityRepository(Appointment)
 class AppointmentRepository {
@@ -16,12 +27,30 @@ class AppointmentRepository {
     return appointments;
   }
 
-  public async findByDate(date: Date): Promise<Appointment | null> {
+  public async findByDate(data: findByDate): Promise<Appointment | null> {
+    const { date, providerId } = data;
     const findAppointment = await this.ormRepository.findOne({
-      where: { date }
+      where: {
+        date,
+        providerId
+      }
     });
 
     return findAppointment || null;
+  }
+
+  public async findDaysWithScheduleAvailable(
+    data: IfindDaysWithScheduleAvailable
+  ): Promise<Appointment[]> {
+    const { startDate, endDate, providerId } = data;
+    const findAppointment = await this.ormRepository.find({
+      where: {
+        providerId,
+        date: Between(startDate, endDate)
+      }
+    });
+
+    return findAppointment;
   }
 
   public async create(

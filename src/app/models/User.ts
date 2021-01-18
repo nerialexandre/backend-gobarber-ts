@@ -25,6 +25,9 @@ class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column('boolean', { default: true })
+  isProvider: boolean;
 }
 
 export default User;

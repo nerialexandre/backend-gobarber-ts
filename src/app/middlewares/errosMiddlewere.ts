@@ -9,6 +9,9 @@ export default function ErrorsMiddlewere(
 ): void {
   const { message } = err;
 
+  // para quando nao localizar o erro descomentar o res.send
+  // res.send(message);
+
   const error = errors.find(item => item.errorCode === message);
 
   if (!error) {

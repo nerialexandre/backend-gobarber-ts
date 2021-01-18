@@ -14,6 +14,7 @@ class AuthController {
         email,
         password
       });
+
       if (result === null) {
         return res.status(400).json({ mensagem: 'usuario nao Autorizado' });
       }
